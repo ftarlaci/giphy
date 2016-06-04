@@ -12,7 +12,7 @@
     <input type="text" id="politician-input"><br> 
     <input id="addPolitician" type="submit" value="Add">
   </form>
-  <div id="PoliticiansView"></div>
+  <div id="Politicians"></div>
 
 <script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
 <script type="text/javascript">
@@ -22,12 +22,12 @@ var politicians = ['Bernie Sanders', 'Donald Trump', 'Hillary Clinton'];
 
 function displaygiphy(){
 	var politician = $(this).attr('data-name');
-	var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchPoliticians + "&limit=10" +"&api_key=dc6zaTOxFJmzC"
+	var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + politicians + "&limit=10" +"&api_key=dc6zaTOxFJmzC"
 	$.ajax({url: queryURL, method: 'GET'}).done(function(response) {
 
 	     console.log(response);
-	     var giphyDiv = $('<div class="giphy">');
-			var movieDiv = $('<div>').attr('class','giphy');
+	     var politiciansDiv = $('<div class="giphy">');
+			var giphyDiv = $('<div>').attr('class','giphy');
 			var rating = response.Rated;
 			var pOne = $('<p>').text( "Rating: " + rating);
 			giphyDiv.append(pOne);
@@ -56,14 +56,14 @@ function renderButtons(){
 
 	$('body').on('click', '.images-returned', function(event){
      	 var state = $(this).attr('data-state');
-    	 var DataStill = $(this).attr('data-still');
-     	 var DataAnimate = $(this).attr('data-animate');
+    	 var dataStill = $(this).attr('data-still');
+     	 var dataAnimate = $(this).attr('data-animate');
      		if (state === 'still') {
-          		$(this).attr('src', DataAnimate);
+          		$(this).attr('src', dataAnimate);
           		$(this).attr('data-state', 'animate');
      		}
      		if (state !== "still") {
-          		$(this).attr('src', DataStill);
+          		$(this).attr('src', dataStill);
           		$(this).attr('data-state', 'still');
      		}
 	});  
