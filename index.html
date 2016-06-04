@@ -1,0 +1,78 @@
+<html>
+<head>
+	<title>Politicians</title>
+</head>
+<body>
+	<div class="container">
+  		<h1>Politicians</h1>
+  			<div id="buttonsView"></div>
+
+  <form id="politician-form">
+    <label for="politician-input">Add</label>
+    <input type="text" id="politician-input"><br> 
+    <input id="addPolitician" type="submit" value="Add">
+  </form>
+  <div id="PoliticiansView"></div>
+
+<script src='http://code.jquery.com/jquery-2.1.3.min.js'></script>
+<script type="text/javascript">
+
+var politicians = ['Bernie Sanders', 'Donald Trump', 'Hillary Clinton'];
+
+
+function displaygiphy(){
+	var politician = $(this).attr('data-name');
+	var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + searchPoliticians + "&limit=10" +"&api_key=dc6zaTOxFJmzC"
+	$.ajax({url: queryURL, method: 'GET'}).done(function(response) {
+
+	     console.log(response);
+	     var giphyDiv = $('<div class="giphy">');
+			var movieDiv = $('<div>').attr('class','giphy');
+			var rating = response.Rated;
+			var pOne = $('<p>').text( "Rating: " + rating);
+			giphyDiv.append(pOne);
+	}); 
+}
+
+function renderButtons(){
+	$('#buttonsView').empty();
+
+	for (var i = 0; i < politicians.length; i++){
+		 var a = $('<button>')
+		 a.addClass('politician'); 
+		    a.attr('data-name', politicians[i]); 
+		    a.text(politicians[i]); 
+		    $('#buttonsView').append(a); // Added the button to the HTML
+		}
+	}
+
+	$('#addPolitician').on('click', function(){
+		var politician = $('#politician-input').val().trim();
+		politicians.push(politician);
+		renderButtons();
+		return false;
+	})
+
+
+	$('body').on('click', '.images-returned', function(event){
+     	 var state = $(this).attr('data-state');
+    	 var DataStill = $(this).attr('data-still');
+     	 var DataAnimate = $(this).attr('data-animate');
+     		if (state === 'still') {
+          		$(this).attr('src', DataAnimate);
+          		$(this).attr('data-state', 'animate');
+     		}
+     		if (state !== "still") {
+          		$(this).attr('src', DataStill);
+          		$(this).attr('data-state', 'still');
+     		}
+	});  
+
+
+	renderButtons();
+	 
+</script>
+
+</body>
+</html>
+
